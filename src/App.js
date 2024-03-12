@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import MovieList from './MovieList';
+import MovieCard from './MovieCard';
+import Filter from './Filter';
 
-function App() {
+
+  const [filteredMovies, setFilteredMovies] = useState(movies);
+
+  const handleFilterChange = (title, rating) => {
+    // Filter movies based on title and rating
+    const filtered = movies.filter((movie) => {
+      const titleMatch = movie.title.toLowerCase().includes(title.toLowerCase());
+      const ratingMatch = movie.rating >= rating;
+      return titleMatch && ratingMatch;
+    });
+    setFilteredMovies(filtered);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <h1>Movie App</h1>
+      <MovieList movies={filteredMovies} onFilterChange={handleFilterChange} />
     </div>
   );
-}
+};
 
 export default App;
